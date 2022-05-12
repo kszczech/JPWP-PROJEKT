@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import filedialog
 import Automat
+from tkinter import ttk
 
 class tkExcelTable:
     def __init__(self, screen):
@@ -43,7 +44,7 @@ class tkExcelTable:
         numberInputLabel = tk.Label(self.screen, text="Zakres lini inputu").grid(row=3, column=4, columnspan=2, padx=10)
         numberOutputLabel = tk.Label(self.screen, text="Zakres lini outputu").grid(row=3, column=6, columnspan=2, padx=10)
 
-        self.fromInputEntry = tk.Entry(self.screen, width=3,)
+        self.fromInputEntry = tk.Entry(self.screen, width=3)
         self.toInputEntry = tk.Entry(self.screen, width=3)
         self.fromInputEntry.grid(row=4, column=4)
         self.toInputEntry.grid(row=4, column=5)
@@ -87,7 +88,6 @@ class tkExcelTable:
     def findDirInput(self):
         self.inputDir = filedialog.askopenfilename(filetypes=[("Excel files", ".xlsx .xls")])
         print(self.inputDir)
-
 
     def findDirOutput(self):
         self.outputDir = filedialog.askopenfilename(filetypes=[("Excel files", ".xlsx .xls")])
