@@ -35,11 +35,11 @@ def sortowanie_podrozujacych(wb, col):
 # usadowienie osob w autobusie
 
 def wpakowanie_do_autobusu(bus, wb, tcount):
-    travs = wb.iloc[:tcount]
+    travs = wb.iloc[:tcount]                        # wybiera tyle ile jest podrozujacych
     travlst = travs.values.tolist()
-    bus.list.extend(travlst)
-    bus.empty_seat -= tcount
-    wb.drop(index=wb.index[:tcount], inplace=True)
+    bus.list.extend(travlst)                        # dorzuca nowych
+    bus.empty_seat -= tcount                        # mniej wolnych miejsc o liczbe podroz
+    wb.drop(index=wb.index[:tcount], inplace=True)  # wyrzucam juz dodanych
     return bus
 
 # wyznaczenie liczby podroznych
@@ -53,11 +53,11 @@ def wyznacz_liczbe_podrozujacych(wb, col):
         return len(wb)
 
 
-def dystrybuowanie_autobusow(wb, buses, col):
+def dystrybuowanie_autobusow(wb, buses, col):             # podajemy ramke, busy i po czym sortujemy
     buses = sortowanie_autobusow(buses)
-    while buses[0].empty_seat > 0 and len(wb) > 0:  # iterowanie po autobusach
-        while True:  # iterowanie po grupach
-            empty = buses[0].empty_seat
+    while buses[0].empty_seat > 0 and len(wb) > 0:        # dopóki jest miejsce i jest jeszcze ktos na liscie to dzialaj
+        while True:
+            empty = buses[0].empty_seat                   #
             wb = sortowanie_podrozujacych(wb, col)
             tcount = wyznacz_liczbe_podrozujacych(wb, col)
             if empty <= tcount:
@@ -74,7 +74,7 @@ def dystrybuowanie_autobusow(wb, buses, col):
     return buses
 
 
-def zapisz_do_arkusza(buses, file_name):
+def zapisz_do_arkusza(buses, path):
     bdfs = []
     for bus in buses:
         bdf = pd.DataFrame(bus.list, columns=['Imie', 'Nazwisko', 'Kierunek', 'Zabawometr'])
@@ -82,18 +82,17 @@ def zapisz_do_arkusza(buses, file_name):
         bdfs.append(bdf)
     df = pd.concat(bdfs)
     print(df)
-    #df.to_excel(file_name, index=False)
+    df.to_excel(path, index=False)
+
 
 
 
 def main():
-    wb = pd.read_excel('projekt.xlsx')
-    # TODO: input kierunki/zabawometr
+
+
     col = 'Kierunek'  # 'Zabawometr'
+    wb = pd.read_excel('projekt.xlsx')
 
-    # autobusy
-
-    # x = int(input("miejsca w busie: "))
     x = 25
     y = x - 1
     z = x - 2
@@ -105,11 +104,7 @@ def main():
 
     buses = dystrybuowanie_autobusow(wb, buses, col)
 
-    #print(b1)
-    #print(b2)
-    #print(b3)
-
-    zapisz_do_arkusza(buses, 'wyniki.xlsx')
+    zapisz_do_arkusza(buses, 'siwy_dym.xlsx')
 
 
 if __name__ == "__main__":

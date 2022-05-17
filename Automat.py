@@ -69,3 +69,23 @@ def fill(column_in, column_out, inputDir, outputDir, fileDir, fromInput, toInput
     nazwa = fileDir#input("jak nazwac gotowy plik")
     output_file.save(nazwa + '.xlsx')
     input_file.save(nazwa + "_input"+".xlsx")
+
+
+def rooms():
+    ist_people = []
+    #excelowa część
+
+    hotel = []
+    list_room = [[2, 3], [3, 2], [4, 1], [5, 2], [6, 3]] #[wielkosc pokoju, ilosc takich pokoi]
+
+    for room in list_room:
+        for i in range(room[1]):
+            line = []
+            for j in range(room[0]):
+                line.append("")
+            line.append(room[0])
+            hotel.append(line)
+
+    print(hotel)
+
+    
