@@ -5,16 +5,21 @@ from Bus import Bus
 
 
 
-def input_funkcja():
+def input_funkcja(root):
+    root = root
     root.filename = filedialog.askopenfilename(initialdir="c:/pdw",
                                            title="Select a xlsx file",
                                            filetypes=(("xlsx files", "*.xlsx"),("all files","*.*")))
     global wb
     wb = pd.read_excel(root.filename)
+    print(wb)
     return wb
 
 
-def output_funkcja(buses,col,wb):
+def output_funkcja(root,buses):
+    global wb
+    global col
+    root = root
     root.filename = filedialog.askopenfilename(filetypes=[("Excel files", ".xlsx .xls")])
     buses = dystrybuowanie_autobusow(wb, buses, col)
     zapisz_do_arkusza(buses, root.filename)
@@ -44,7 +49,7 @@ def display():
     root.title("Przydzielanie osób do autobusów")
     #root.geometry('400x400')
 
-    col = ''
+    global col
     x = 30
     y = x - 1
     z = x - 2
@@ -53,7 +58,7 @@ def display():
     b2 = Bus("b2", x, z)
     b3 = Bus("b3", x, q)
     buses = [b1, b2, b3]
-    wb = ''
+    global wb
 
 
     r = IntVar()
@@ -62,8 +67,8 @@ def display():
 
 
 
-    input = Button(root, text="Input file", padx= 60, pady=30, command=input_funkcja)
-    output = Button(root, text="Output file", padx= 60, pady=30, command=lambda :output_funkcja(buses,col,wb))
+    input = Button(root, text="Input file", padx= 60, pady=30, command=lambda : input_funkcja(root))
+    output = Button(root, text="Output file", padx= 60, pady=30, command=lambda :output_funkcja(root,buses))
     zabawa = Radiobutton(root, text="Zabawometr", variable=r, value=1, command=lambda: clicked_but(r.get()))
     kierunki = Radiobutton(root, text="Kierunek", variable=r,  value=2,command=lambda: clicked_but(r.get()))
 
@@ -76,6 +81,10 @@ def display():
 
 
     root.mainloop()
+
+
+
+
 
 
 
