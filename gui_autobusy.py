@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import filedialog
-from Autobusy_main import *
-from Bus import Bus
+from autobusy_main import *
+from bus import Bus
 
 
 def input_funkcja(root):
