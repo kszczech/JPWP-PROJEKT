@@ -1,5 +1,5 @@
 import pandas as pd
-from Bus import Bus
+from bus import Bus
 
 
 # sortowanie listy po zabawometrze
